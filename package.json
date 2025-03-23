@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "env": "^0.0.2",
+    "express": "^4.21.2",
+    "mongoose": "^8.12.2",
+    "nodemon": "^3.1.9"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "name": "backend-developer-challenge-todo-backend",
+  "description": "Develop a web application for managing a simple to-do list with user authentication. The application should allow users to sign up, log in, create, read, update, and delete tasks. Each user should only have access to their own tasks.",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
+}
