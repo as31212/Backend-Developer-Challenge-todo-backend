@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
-// todo include controller and jwt imports here
+const loginController = require("../controllers/authControllers/loginController");
+const signinController = require("../controllers/authControllers/signinController");
 
-router.post('/sign-in',); // todo add controller
-router.post('/login',); // todo add controller
+
+router.post('/sign-in',signinController); 
+router.post('/login',loginController);
 
 module.exports = router;
