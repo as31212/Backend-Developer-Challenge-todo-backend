@@ -4,6 +4,7 @@ const cors = require("cors");
 const connectToMongo = require("./config/mongodb");
 
 // todo routes imports
+const authRoutes = require("./routes/authRoutes");
 
 const dotenv = require("dotenv").config();
 const port = process.env.port || 8881;
@@ -12,6 +13,7 @@ app.use(cors()); //enables cross origin resources sharing allowing any ip addres
 app.use(express.json()); //enables json automatic json parsing within application
 
 // todo use routes
+app.use('/auth',authRoutes);
 
 connectToMongo();
 

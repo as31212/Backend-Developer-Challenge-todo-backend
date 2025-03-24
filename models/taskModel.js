@@ -24,6 +24,11 @@ const taskSchema =  new mongoose.Schema({
             },
             message: 'Due date must be in the future'
         }
+    },
+    status:{
+        type: String,
+        enum: ["complete,incomplete"],
+        required: true,
     }
 });
 
