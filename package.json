@@ -4,6 +4,7 @@
     "dotenv": "^16.4.7",
     "env": "^0.0.2",
     "express": "^4.21.2",
+    "mongodb": "^6.15.0",
     "mongoose": "^8.12.2",
     "nodemon": "^3.1.9"
   },
@@ -15,7 +16,11 @@
   "description": "Develop a web application for managing a simple to-do list with user authentication. The application should allow users to sign up, log in, create, read, update, and delete tasks. Each user should only have access to their own tasks.",
   "version": "1.0.0",
   "main": "server.js",
-  "devDependencies": {},
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^10.1.4"
+  }
 }

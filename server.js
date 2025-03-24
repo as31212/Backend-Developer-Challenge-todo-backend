@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-// todo mongodb connection
+const connectToMongo = require("./config/mongodb");
 
 // todo routes imports
 
@@ -13,8 +13,7 @@ app.use(express.json()); //enables json automatic json parsing within applicatio
 
 // todo use routes
 
-
-// todo connect to mongodb
+connectToMongo();
 
 app.listen(port,()=>{
     console.log(`listening on port ${port}`);
