@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 
 const signinController = async (req,res)=> {
 try {
+    console.log(req.body);
+    
     const {username, password, email} = req.body;
     
     if(!username || !password || !email){
@@ -21,6 +23,7 @@ try {
 
     const newUser = new User({
         email,
+        username,
         password: hashedPassword,
     })
 
@@ -36,6 +39,7 @@ try {
         message: "user account created",
         user:{
             id: newUser._id,
+            username: newUser.username,
             email: newUser.email,
             tasks: newUser.tasks
         },

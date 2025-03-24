@@ -11,7 +11,7 @@ const loginController = async (req,res) =>{
             return res.status(400).json({message: "email and password required"});
         }
 
-        const user = await findOne({email});
+        const user = await User.findOne({email});
 
         const passIsMatch = await bcrypt.compare(password,user.password);
 
@@ -30,6 +30,7 @@ const loginController = async (req,res) =>{
             user:{
                 id: user._id,
                 email: user.email,
+                username: user.username,
                 tasks: user.tasks
             },
             token,
