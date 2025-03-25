@@ -16,19 +16,16 @@ const taskSchema =  new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    dateDue:{
-        type:Date,
-        validate:{
-            validator: function(value){
-                return value >= new Date();
-            },
-            message: 'Due date must be in the future'
-        }
-    },
     status:{
         type: String,
         enum: ["complete,incomplete"],
         required: true,
+        default: "incomplete"
+    },
+    createdBy:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     }
 });
 
