@@ -15,7 +15,7 @@ app.use(express.json()); //enables json automatic json parsing within applicatio
 
 
 app.use('/auth',authRoutes);
-app.use('task',taskRoutes);
+app.use('/task',taskRoutes);
 
 connectToMongo();
 
