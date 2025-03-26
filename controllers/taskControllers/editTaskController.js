@@ -3,10 +3,10 @@ const Task = require("../../models/taskModel");
 const editTaskController = async (req,res)=>{
     try {
 
-        const {taskId,title,description} = req.body;
+        const {taskId,title} = req.body;
 
-        if(!taskId || !title || !description){
-            return res.status(400).json({message:"Task ID, title, and description required"});
+        if(!taskId || !title){
+            return res.status(400).json({message:"Task ID and title required"});
         }
 
         const task  = await Task.findById(taskId);
@@ -16,7 +16,6 @@ const editTaskController = async (req,res)=>{
         }
 
         task.title = title;
-        task.description = description;
 
         await task.save();
 

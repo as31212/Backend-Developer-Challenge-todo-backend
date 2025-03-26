@@ -4,19 +4,18 @@ const User = require("../../models/userModel");
 const createTaskController = async (req,res)=>{
     try {
         const userId = req.params.userId;
-        const {title,description} = req.body;
+        const {title} = req.body;
 
         if(!userId){
             return res.status(400).json({message:"User ID required"});
         }
         
-        if(!title || !description){
-            return res.status(400).json({message:"Title and description required"});
+        if(!title){
+            return res.status(400).json({message:"Title required"});
         }
 
         const newTask = new Task({
             title: title,
-            description: description,
             createdBy: userId
         });
 
