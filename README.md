@@ -1,235 +1,262 @@
 # Task Management API
 
-![Node.js](https://img.shields.io/badge/Node.js-v14+-green)
-![Express](https://img.shields.io/badge/Express-v4.17+-blue)
-![MongoDB](https://img.shields.io/badge/MongoDB-v4.4+-green)
-
-A secure RESTful API for task management with JWT authentication, built with Node.js, Express, and MongoDB.
-
 ## Table of Contents
 - [Features](#features)
-- [API Documentation](#api-documentation)
+- [API Endpoints](#api-endpoints)
+  - [Authentication](#authentication)
+    - [`POST /auth/sign-in`](#post-auth-sign-in)
+    - [`POST /auth/login`](#post-authlogin)
+  - [Tasks](#tasks)
+    - [`GET /tasks/:userId`](#get-tasksuserid)
+    - [`POST /add/:userId`](#post-adduserid)
+    - [`PATCH /edit`](#patch-edit)
+    - [`PATCH /status-change`](#patch-status-change)
+    - [`DELETE /delete`](#delete-delete)
 - [Models](#models)
-- [Authentication](#authentication)
-- [Error Handling](#error-handling)
-- [Installation](#installation)
+  - [User](#user)
+  - [Task](#task)
+- [Authentication](#authentication-1)
+- [Error Responses](#error-responses)
 - [Environment Variables](#environment-variables)
-- [License](#license)
+
+A RESTful API for managing tasks with user authentication.
 
 ## Features
-- ✅ JWT authentication with 1-hour expiration
-- 🔒 Password hashing with bcrypt
-- 👤 User registration and login
-- 📝 Full CRUD operations for tasks
-- ✔️ Input validation and sanitization
-- 🚦 Comprehensive error handling
 
-## API Documentation
+- User authentication (signup/login with JWT)
+- CRUD operations for tasks
+- Task status management
+- User-specific task retrieval
+
+## API Endpoints
 
 ### Authentication
 
-#### `POST /auth/sign-in` - Register new user
-**Request:**
-```json
-{
-  "username": "johndoe",
-  "email": "john@example.com",
-  "password": "securepassword123"
-}
-```
+#### `POST /auth/sign-in`
+[... rest of your existing content remains exactly the same ...]
+# Task Management API
 
-**Response (201 Created):**
-```json
-{
-  "message": "user account created",
-  "user": {
-    "id": "507f1f77bcf86cd799439011",
-    "username": "johndoe",
-    "email": "john@example.com"
-  },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-```
+A RESTful API for managing tasks with user authentication.
 
-#### `POST /auth/login` - User login
-**Request:**
-```json
-{
-  "email": "john@example.com",
-  "password": "securepassword123"
-}
-```
+## Features
 
-**Response (200 OK):**
-```json
-{
-  "message": "Login Successful",
-  "user": {
-    "id": "507f1f77bcf86cd799439011",
-    "email": "john@example.com",
-    "username": "johndoe"
-  },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-```
+- User authentication (signup/login with JWT)
+- CRUD operations for tasks
+- Task status management
+- User-specific task retrieval
 
-### Task Management (All require JWT)
+## API Endpoints
 
-#### `POST /task/add/:userId` - Create task
-**Headers:**
-```
-Authorization: Bearer <token>
-```
+### Authentication
 
-**Request:**
-```json
-{
-  "title": "Complete project",
-  "description": "Finish API documentation"
-}
-```
-
-**Response (201 Created):**
-```json
-{
-  "message": "Post successfully created",
-  "task": {
-    "title": "Complete project",
-    "description": "Finish API documentation",
-    "status": "incomplete",
-    "createdBy": "507f1f77bcf86cd799439011",
-    "_id": "65a8f857e8b4d12c7f4a8b9c"
-  }
-}
-```
-
-#### `GET /task/tasks/:userId` - Get user tasks
-**Headers:**
-```
-Authorization: Bearer <token>
-```
-
-**Response (200 OK):**
-```json
-[
+#### `POST /auth/sign-in`
+- Creates a new user account
+- **Request Body:**
+  ```json
   {
-    "_id": "65a8f857e8b4d12c7f4a8b9c",
-    "title": "Complete project",
-    "description": "Finish API documentation",
-    "status": "incomplete",
-    "createdBy": "507f1f77bcf86cd799439011"
+    "username": "string",
+    "password": "string",
+    "email": "string"
   }
-]
-```
+  ```
+- **Success Response:**
+  ```json
+  {
+    "message": "user account created",
+    "user": {
+      "id": "string",
+      "username": "string",
+      "email": "string",
+      "tasks": []
+    },
+    "token": "string"
+  }
+  ```
 
-#### `PATCH /task/edit` - Update task
-**Headers:**
-```
-Authorization: Bearer <token>
-```
+#### `POST /auth/login`
+- Logs in an existing user
+- **Request Body:**
+  ```json
+  {
+    "email": "string",
+    "password": "string"
+  }
+  ```
+- **Success Response:**
+  ```json
+  {
+    "message": "Login successful",
+    "user": {
+      "id": "string",
+      "username": "string",
+      "email": "string",
+      "tasks": []
+    },
+    "token": "string"
+  }
+  ```
 
-**Request:**
-```json
-{
-  "taskId": "65a8f857e8b4d12c7f4a8b9c",
-  "title": "Updated title",
-  "description": "Updated description"
-}
-```
+### Tasks
 
-**Response (200 OK):**
-```json
-{
-  "message": "Task successfully updated",
-  "taskId": "65a8f857e8b4d12c7f4a8b9c"
-}
-```
+#### `GET /tasks/:userId`
+- Retrieves all tasks for a specific user
+- **Headers:**
+  ```
+  Authorization: Bearer <token>
+  ```
+- **Success Response:**
+  ```json
+  [
+    {
+      "_id": "string",
+      "title": "string",
+      "dateCreated": "ISO Date",
+      "status": "complete|incomplete",
+      "createdBy": "userId"
+    }
+  ]
+  ```
 
-#### `DELETE /task/delete` - Delete task
-**Headers:**
-```
-Authorization: Bearer <token>
-```
+#### `POST /add/:userId`
+- Creates a new task
+- **Headers:**
+  ```
+  Authorization: Bearer <token>
+  ```
+- **Request Body:**
+  ```json
+  {
+    "title": "string"
+  }
+  ```
+- **Success Response:**
+  ```json
+  {
+    "message": "Post successfully created",
+    "task": {
+      "_id": "string",
+      "title": "string",
+      "dateCreated": "ISO Date",
+      "status": "incomplete",
+      "createdBy": "userId"
+    }
+  }
+  ```
 
-**Request:**
-```json
-{
-  "taskId": "65a8f857e8b4d12c7f4a8b9c"
-}
-```
+#### `PATCH /edit`
+- Updates a task's title
+- **Headers:**
+  ```
+  Authorization: Bearer <token>
+  ```
+- **Request Body:**
+  ```json
+  {
+    "taskId": "string",
+    "title": "string"
+  }
+  ```
+- **Success Response:**
+  ```json
+  {
+    "message": "Task successfully updated",
+    "taskId": "string"
+  }
+  ```
 
-**Response (200 OK):**
-```json
-{
-  "message": "Task successfully deleted",
-  "deletedTaskId": "65a8f857e8b4d12c7f4a8b9c"
-}
-```
+#### `PATCH /status-change`
+- Updates a task's status
+- **Headers:**
+  ```
+  Authorization: Bearer <token>
+  ```
+- **Request Body:**
+  ```json
+  {
+    "taskId": "string",
+    "status": "complete|incomplete"
+  }
+  ```
+- **Success Response:**
+  ```json
+  {
+    "message": "Task status updated successfully",
+    "updatedTaskStatus": "complete|incomplete"
+  }
+  ```
+
+#### `DELETE /delete`
+- Deletes a task
+- **Headers:**
+  ```
+  Authorization: Bearer <token>
+  ```
+- **Request Body:**
+  ```json
+  {
+    "taskId": "string"
+  }
+  ```
+- **Success Response:**
+  ```json
+  {
+    "message": "Task successfully deleted",
+    "deletedTaskId": "string"
+  }
+  ```
 
 ## Models
 
 ### User
 ```javascript
 {
-  email: String,    // unique, required, lowercase
-  username: String, // required, lowercase
-  password: String  // required, minlength: 6
+  email: String,      // unique, required
+  username: String,   // required
+  password: String    // required, minlength: 6
 }
 ```
 
 ### Task
 ```javascript
 {
-  title: String,        // required, maxlength: 100
-  description: String,  // maxlength: 500
-  status: String,       // enum: ["complete", "incomplete"]
-  createdBy: ObjectId,   // reference to User
-  dateCreated: Date     // default: Date.now
+  title: String,      // required, maxlength: 100
+  dateCreated: Date,  // defaults to now
+  status: String,     // enum: ["complete", "incomplete"], default: "incomplete"
+  createdBy: ObjectId // reference to User, required
 }
 ```
 
 ## Authentication
-- JWT tokens are required for all task endpoints
-- Tokens expire after 1 hour
-- Include in headers: `Authorization: Bearer <token>`
 
-## Error Handling
-| Status Code | Description |
-|-------------|-------------|
-| 400 | Bad Request - Missing/invalid fields |
-| 401 | Unauthorized - Invalid/missing token |
-| 404 | Not Found - Resource doesn't exist |
-| 500 | Internal Server Error |
+All task endpoints require JWT authentication. Include the token in the Authorization header:
+```
+Authorization: Bearer <your-jwt-token>
+```
 
-## Installation
-1. Clone repository
-2. Install dependencies:
-```bash
-npm install
-```
-3. Set up environment variables (see below)
-4. Start server:
-```bash
-npm start
-```
+## Error Responses
+
+- `400 Bad Request`: Missing or invalid parameters
+- `401 Unauthorized`: Invalid or missing authentication token
+- `404 Not Found`: Resource not found
+- `500 Internal Server Error`: Server error
 
 ## Environment Variables
-Create `.env` file:
-```env
-MONGODB_URI=mongodb://localhost:27017/taskmanager
-JWT_KEY=your_secret_key_here
-PORT=8881
+
+- `JWT_KEY`: Secret key for JWT token generation
+- `MONGO_URI`: MongoDB connection string
 ```
 
-## License
-MIT License
-```
+This README provides comprehensive documentation for your API, including:
+1. All available endpoints
+2. Request/response formats
+3. Authentication requirements
+4. Data models
+5. Error handling
+6. Environment configuration
 
-This README.md includes:
-- Clear API documentation with request/response examples
-- Model definitions
-- Authentication requirements
-- Error handling information
+You can customize it further by adding sections for:
 - Installation instructions
-- Environment variables setup
+- Example usage
+- Deployment notes
+- Contribution guidelines
 - License information
